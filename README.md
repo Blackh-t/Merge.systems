@@ -17,14 +17,15 @@ We invite you to explore the DEMO and share your feedback! If there’s a featur
 ---
 ### Current Features:
 - **AI Memory**
-
-### In Progress:
 - **Web Integration** : Security
+- **Northern Light** : Live data forcast
+  
+### In Progress:
 - **Mail API**
 
 ---
 ### Roadmap
-- [ ] **Web Integration**
+- [x] **Web Integration**
 - [x] **AI Memory**
 - [ ] **Omni-Search**
 - [ ] **Mail API**
