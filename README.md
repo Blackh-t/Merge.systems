@@ -1,9 +1,6 @@
-# Merge-AI
-https://merge-ai.netlify.app/
-✨ Add to your home screen for a better experience!
+# Merge Systems
+CLOSED SERVICE ( Client Only )
 
-
-[![Sponsor](https://img.shields.io/badge/sponsor-GitHub-lightgreen)](https://github.com/sponsors/Blackh-t)
 ## Introduction
 
 Merge-AI is here to integrate AI into your everyday tasks, offering the features you’ve always wanted from @OpenAI, including:  
@@ -12,22 +9,22 @@ Merge-AI is here to integrate AI into your everyday tasks, offering the features
 - **Omni-Search**  
 - **Device Integration**  
 
-We invite you to explore the DEMO and share your feedback! If there’s a feature you’d like Merge-AI to include, let us know—we’re constantly evolving to meet your needs.
-
 ---
 ### Current Features:
 - **AI Memory**
-
-### In Progress:
 - **Web Integration** : Security
+- **Northern Light** : Live data forcast
 - **Mail API**
+  
+### In Progress:
+- **Omni-Search**
 
 ---
 ### Roadmap
-- [ ] **Web Integration**
+- [x] **Web Integration**
 - [x] **AI Memory**
 - [ ] **Omni-Search**
-- [ ] **Mail API**
+- [x] **Mail API**
 - [ ] **Economic Market Analyzer**
 - [ ] **Encrypted P2P Connections**
 - [ ] **Device Synchronization**
