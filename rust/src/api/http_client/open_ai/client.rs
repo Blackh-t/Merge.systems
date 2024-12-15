@@ -6,11 +6,11 @@ use std::error::Error;
 /// Send request to OpenAI with the conversations historic.
 /// # Parameter
 /// - `chat_log`: list of tuplets ("Role", "Content")
-async fn post_log(chat_log: Vec<(String, String)>) -> Result<String, Box<dyn Error>> {
+async fn openai_send_request(chat_log: Vec<(String, String)>) -> Result<String, Box<dyn Error>> {
     // Convert ChatLog into Structure of conversations
     let msg = ChatLog::msg_convertion(chat_log).serialize().unwrap();
     // Build request
-    let url = "https://merge-ai.netlify.app/.netlify/functions/open_ai";
+    let url = "...";
     let client = reqwest::Client::new();
     let response = client
         .post(url)
@@ -23,10 +23,10 @@ async fn post_log(chat_log: Vec<(String, String)>) -> Result<String, Box<dyn Err
 }
 
 /// Read response from HTTP-server
-pub async fn fetch_log(chat_log: Vec<(String, String)>) -> String {
+pub async fn openai_read_response(chat_log: Vec<(String, String)>) -> String {
     // OpenAi Chat Result Handler
-    match post_log(chat_log).await {
-        Ok(msg) => format!("{}", msg),
+    match openai_send_request(chat_log).await {
+        Ok(msg) => msg,
         Err(e) => format!("OpenAIError: {}", e),
     }
 }

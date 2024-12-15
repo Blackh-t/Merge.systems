@@ -70,7 +70,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.6.0';
 
   @override
-  int get rustContentHash => -1987086608;
+  int get rustContentHash => -608617080;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -87,12 +87,12 @@ abstract class RustLibApi extends BaseApi {
   Future<ChatResultsString> crateApiHttpClientOpenAiConverterChatLogSerialize(
       {required ChatLog that});
 
-  Future<String> crateApiHttpClientOpenAiClientFetchLog(
-      {required List<(String, String)> chatLog});
-
   String crateApiSimpleGreet({required String name});
 
   Future<void> crateApiSimpleInitApp();
+
+  Future<String> crateApiHttpClientOpenAiClientOpenaiReadResponse(
+      {required List<(String, String)> chatLog});
 
   RustArcIncrementStrongCountFnType
       get rust_arc_increment_strong_count_ChatCompletionRequestMessage;
@@ -178,38 +178,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
 
   @override
-  Future<String> crateApiHttpClientOpenAiClientFetchLog(
-      {required List<(String, String)> chatLog}) {
-    return handler.executeNormal(NormalTask(
-      callFfi: (port_) {
-        final serializer = SseSerializer(generalizedFrbRustBinding);
-        sse_encode_list_record_string_string(chatLog, serializer);
-        pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 3, port: port_);
-      },
-      codec: SseCodec(
-        decodeSuccessData: sse_decode_String,
-        decodeErrorData: null,
-      ),
-      constMeta: kCrateApiHttpClientOpenAiClientFetchLogConstMeta,
-      argValues: [chatLog],
-      apiImpl: this,
-    ));
-  }
-
-  TaskConstMeta get kCrateApiHttpClientOpenAiClientFetchLogConstMeta =>
-      const TaskConstMeta(
-        debugName: "fetch_log",
-        argNames: ["chatLog"],
-      );
-
-  @override
   String crateApiSimpleGreet({required String name}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(name, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -232,7 +206,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 5, port: port_);
+            funcId: 4, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -248,6 +222,33 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         debugName: "init_app",
         argNames: [],
       );
+
+  @override
+  Future<String> crateApiHttpClientOpenAiClientOpenaiReadResponse(
+      {required List<(String, String)> chatLog}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_list_record_string_string(chatLog, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 5, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiHttpClientOpenAiClientOpenaiReadResponseConstMeta,
+      argValues: [chatLog],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta
+      get kCrateApiHttpClientOpenAiClientOpenaiReadResponseConstMeta =>
+          const TaskConstMeta(
+            debugName: "openai_read_response",
+            argNames: ["chatLog"],
+          );
 
   RustArcIncrementStrongCountFnType
       get rust_arc_increment_strong_count_ChatCompletionRequestMessage => wire

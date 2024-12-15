@@ -6,9 +6,9 @@
 import '../../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `post_log`
+// These functions are ignored because they are not marked as `pub`: `openai_send_request`
 
 /// Read response from HTTP-server
-Future<String> fetchLog({required List<(String, String)> chatLog}) =>
+Future<String> openaiReadResponse({required List<(String, String)> chatLog}) =>
     RustLib.instance.api
-        .crateApiHttpClientOpenAiClientFetchLog(chatLog: chatLog);
+        .crateApiHttpClientOpenAiClientOpenaiReadResponse(chatLog: chatLog);

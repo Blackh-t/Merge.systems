@@ -152,7 +152,7 @@ class _Chat extends State<Chat> {
                 onSubmitted: (text)  async{   
                   _controller.clear();
                   chatHistories.add(("user", text));
-                  String response = await fetchLog(chatLog: chatHistories);
+                  String response = await openaiReadResponse(chatLog: chatHistories);
                   chatHistories.add(("assistant", response));
                   setState(() {
                     messages.add(
