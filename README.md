@@ -18,7 +18,7 @@ Merge-AI is here to integrate AI into your everyday tasks, offering the features
   
 ### In Progress:
 - **BlockChain authentication** Only NFT holders can access to the server
-- **Omni-Search**
+- **Omni-Search** Stage 1
   
 ---
 ### Roadmap
