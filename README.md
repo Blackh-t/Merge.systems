@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Merge-AI is here to integrate AI into your everyday tasks, offering the features you’ve always wanted from @OpenAI, including:  
+Merge Systems is here to integrate AI into our everyday tasks, offering the features you’ve always wanted from @OpenAI, including:  
 - **Mail API**  
 - **Image Fetching**  
 - **Omni-Search**  
