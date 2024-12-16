@@ -1,5 +1,4 @@
 # Merge Systems
-CLOSED SERVICE ( Client Only )
 
 ## Introduction
 
@@ -39,4 +38,9 @@ Merge-AI is here to integrate AI into your everyday tasks, offering the features
 ### Upcoming Features
 - **DashBoard**
 - **Face Recognition**
-
+---
+### Donation
+ETH: ```0xcd446f25f059784b7a44139f6e32a3bf62b88a51```
+Contribution: $10 grants 30 days of access. Your wallet will be automatically registered and removed after the period ends.
+All donations will be used to cover costs for third-party API services such as OpenAI, SendGrid, and DigitalOcean.
+Thank you :)
