@@ -15,10 +15,11 @@ Merge-AI is here to integrate AI into your everyday tasks, offering the features
 - **Web Integration** : Security
 - **Northern Light** : Live data forcast
 - **Mail API**
+- **BlockChain authentication** 
   
 ### In Progress:
-- **BlockChain authentication** Only NFT holders can access to the server
 - **Omni-Search** Stage 1
+- **Trading Bot**
   
 ---
 ### Roadmap
@@ -32,7 +33,6 @@ Merge-AI is here to integrate AI into your everyday tasks, offering the features
 - [ ] **Customizable Task Automation**
 - [ ] **Image Processing**
 - [ ] **Smart Notifications**
-- [ ] **Face Recognition**
 
 
 ---
