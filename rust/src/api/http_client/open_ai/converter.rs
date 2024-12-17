@@ -1,4 +1,5 @@
 pub use crate::api::http_client::open_ai::errors::{ChatErrors, ChatResults};
+use crate::api::systems::blockchain::verification::gets_owner;
 pub use async_openai_wasm::types::{
     ChatCompletionRequestAssistantMessageArgs, ChatCompletionRequestMessage,
     ChatCompletionRequestSystemMessageArgs, ChatCompletionRequestUserMessageArgs,
@@ -10,11 +11,12 @@ pub use serde_json;
 #[derive(Serialize, Deserialize)]
 pub struct ChatLog {
     pub contents: Vec<ChatCompletionRequestMessage>,
+    pub pub_key: String,
 }
 impl ChatLog {
     /// Converting the Chat Histories from fromtend into a list of tuplets wuth role definition and text.    
     /// The result can be used directly in the Chat-service.
-    pub fn msg_convertion(chat_log: Vec<(String, String)>) -> Self {
+    pub async fn msg_convertion(chat_log: Vec<(String, String)>, key: String) -> Self {
         let messages: Vec<ChatCompletionRequestMessage> = chat_log
             .into_iter()
             .map(|(role, content)| match role.trim() {
@@ -35,7 +37,11 @@ impl ChatLog {
                     .into(),
             })
             .collect();
-        ChatLog { contents: messages }
+
+        ChatLog {
+            contents: messages,
+            pub_key: gets_owner(&key).await,
+        }
     }
 
     /// Serialize Data into JSON-format

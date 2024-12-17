@@ -3,9 +3,11 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
+import 'api/http_client/blockchain/client.dart';
 import 'api/http_client/open_ai/client.dart';
 import 'api/http_client/open_ai/converter.dart';
 import 'api/simple.dart';
+import 'api/systems/blockchain/verification.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -70,7 +72,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.6.0';
 
   @override
-  int get rustContentHash => -608617080;
+  int get rustContentHash => 250596939;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -82,17 +84,23 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 
 abstract class RustLibApi extends BaseApi {
   Future<ChatLog> crateApiHttpClientOpenAiConverterChatLogMsgConvertion(
-      {required List<(String, String)> chatLog});
+      {required List<(String, String)> chatLog, required String key});
 
   Future<ChatResultsString> crateApiHttpClientOpenAiConverterChatLogSerialize(
       {required ChatLog that});
+
+  Future<bool> crateApiHttpClientBlockchainClientCheckKey(
+      {required String key});
+
+  Future<String> crateApiSystemsBlockchainVerificationGetsOwner(
+      {required String privKey});
 
   String crateApiSimpleGreet({required String name});
 
   Future<void> crateApiSimpleInitApp();
 
   Future<String> crateApiHttpClientOpenAiClientOpenaiReadResponse(
-      {required List<(String, String)> chatLog});
+      {required List<(String, String)> chatLog, required String key});
 
   RustArcIncrementStrongCountFnType
       get rust_arc_increment_strong_count_ChatCompletionRequestMessage;
@@ -123,11 +131,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @override
   Future<ChatLog> crateApiHttpClientOpenAiConverterChatLogMsgConvertion(
-      {required List<(String, String)> chatLog}) {
+      {required List<(String, String)> chatLog, required String key}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_list_record_string_string(chatLog, serializer);
+        sse_encode_String(key, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
             funcId: 1, port: port_);
       },
@@ -137,7 +146,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       ),
       constMeta:
           kCrateApiHttpClientOpenAiConverterChatLogMsgConvertionConstMeta,
-      argValues: [chatLog],
+      argValues: [chatLog, key],
       apiImpl: this,
     ));
   }
@@ -146,7 +155,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       get kCrateApiHttpClientOpenAiConverterChatLogMsgConvertionConstMeta =>
           const TaskConstMeta(
             debugName: "chat_log_msg_convertion",
-            argNames: ["chatLog"],
+            argNames: ["chatLog", "key"],
           );
 
   @override
@@ -178,12 +187,64 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
 
   @override
+  Future<bool> crateApiHttpClientBlockchainClientCheckKey(
+      {required String key}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(key, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 3, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_bool,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiHttpClientBlockchainClientCheckKeyConstMeta,
+      argValues: [key],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiHttpClientBlockchainClientCheckKeyConstMeta =>
+      const TaskConstMeta(
+        debugName: "check_key",
+        argNames: ["key"],
+      );
+
+  @override
+  Future<String> crateApiSystemsBlockchainVerificationGetsOwner(
+      {required String privKey}) {
+    return handler.executeNormal(NormalTask(
+      callFfi: (port_) {
+        final serializer = SseSerializer(generalizedFrbRustBinding);
+        sse_encode_String(privKey, serializer);
+        pdeCallFfi(generalizedFrbRustBinding, serializer,
+            funcId: 4, port: port_);
+      },
+      codec: SseCodec(
+        decodeSuccessData: sse_decode_String,
+        decodeErrorData: null,
+      ),
+      constMeta: kCrateApiSystemsBlockchainVerificationGetsOwnerConstMeta,
+      argValues: [privKey],
+      apiImpl: this,
+    ));
+  }
+
+  TaskConstMeta get kCrateApiSystemsBlockchainVerificationGetsOwnerConstMeta =>
+      const TaskConstMeta(
+        debugName: "gets_owner",
+        argNames: ["privKey"],
+      );
+
+  @override
   String crateApiSimpleGreet({required String name}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_String(name, serializer);
-        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+        return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
@@ -206,7 +267,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 4, port: port_);
+            funcId: 6, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_unit,
@@ -225,20 +286,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @override
   Future<String> crateApiHttpClientOpenAiClientOpenaiReadResponse(
-      {required List<(String, String)> chatLog}) {
+      {required List<(String, String)> chatLog, required String key}) {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
         sse_encode_list_record_string_string(chatLog, serializer);
+        sse_encode_String(key, serializer);
         pdeCallFfi(generalizedFrbRustBinding, serializer,
-            funcId: 5, port: port_);
+            funcId: 7, port: port_);
       },
       codec: SseCodec(
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
       constMeta: kCrateApiHttpClientOpenAiClientOpenaiReadResponseConstMeta,
-      argValues: [chatLog],
+      argValues: [chatLog, key],
       apiImpl: this,
     ));
   }
@@ -247,7 +309,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       get kCrateApiHttpClientOpenAiClientOpenaiReadResponseConstMeta =>
           const TaskConstMeta(
             debugName: "openai_read_response",
-            argNames: ["chatLog"],
+            argNames: ["chatLog", "key"],
           );
 
   RustArcIncrementStrongCountFnType
@@ -307,6 +369,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool dco_decode_bool(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as bool;
+  }
+
+  @protected
   ChatLog dco_decode_box_autoadd_chat_log(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_chat_log(raw);
@@ -316,12 +384,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ChatLog dco_decode_chat_log(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 1)
-      throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
     return ChatLog(
       contents:
           dco_decode_list_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerChatCompletionRequestMessage(
               arr[0]),
+      pubKey: dco_decode_String(arr[1]),
     );
   }
 
@@ -423,6 +492,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool sse_decode_bool(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint8() != 0;
+  }
+
+  @protected
   ChatLog sse_decode_box_autoadd_chat_log(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_chat_log(deserializer));
@@ -434,7 +509,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_contents =
         sse_decode_list_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerChatCompletionRequestMessage(
             deserializer);
-    return ChatLog(contents: var_contents);
+    var var_pubKey = sse_decode_String(deserializer);
+    return ChatLog(contents: var_contents, pubKey: var_pubKey);
   }
 
   @protected
@@ -506,12 +582,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  bool sse_decode_bool(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8() != 0;
-  }
-
-  @protected
   void
       sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerChatCompletionRequestMessage(
           ChatCompletionRequestMessage self, SseSerializer serializer) {
@@ -560,6 +630,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_bool(bool self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint8(self ? 1 : 0);
+  }
+
+  @protected
   void sse_encode_box_autoadd_chat_log(ChatLog self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_chat_log(self, serializer);
@@ -570,6 +646,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerChatCompletionRequestMessage(
         self.contents, serializer);
+    sse_encode_String(self.pubKey, serializer);
   }
 
   @protected
@@ -631,12 +708,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_i_32(int self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putInt32(self);
-  }
-
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self ? 1 : 0);
   }
 }
 

@@ -10,7 +10,7 @@ class Message {
 
 List<Message> messages = [
   const Message(
-    text: "Welcome!",
+    text: "Verify yourself with an Ethereum private key wallet",
     isSentByMe: false
   ),
 ];

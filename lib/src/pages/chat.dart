@@ -6,6 +6,7 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_markdown_latex/flutter_markdown_latex.dart';
+import 'package:merge_ai/src/rust/api/http_client/blockchain/client.dart';
 import 'package:merge_ai/src/rust/api/http_client/open_ai/client.dart';
 import 'chat_tools.dart';
 
@@ -20,8 +21,8 @@ class _Chat extends State<Chat> {
     
   final TextEditingController _controller = TextEditingController();  // Controller for TextField
   String chatLog = "";
-  bool api = true;
-  String apiKeys = "";
+  bool auth = false;
+  String priv_key = "";
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +83,11 @@ class _Chat extends State<Chat> {
                                 bodyMedium: TextStyle(
                                   fontSize: 14,
                                   fontWeight: message.isSentByMe
-                                    ? FontWeight.w300
+                                    ? FontWeight.w200
                                     : FontWeight.w200,
                                   color: message.isSentByMe
-                                    ? HexColor('#EEEEEE')
-                                    : HexColor('#EEEEEE'),
+                                    ? HexColor('#E4E0E1')
+                                    : HexColor('#E4E0E1'),
                                 )
                               ) 
                             ),
@@ -151,23 +152,51 @@ class _Chat extends State<Chat> {
                 textInputAction: TextInputAction.done,
                 onSubmitted: (text)  async{   
                   _controller.clear();
-                  chatHistories.add(("user", text));
-                  String response = await openaiReadResponse(chatLog: chatHistories);
-                  chatHistories.add(("assistant", response));
-                  setState(() {
-                    messages.add(
-                      Message(
-                        text: text, 
-                        isSentByMe: true,
-                      ),
-                    );
-                    messages.add(
-                      Message(
-                        text: response,
-                        isSentByMe: false,
-                      ),
-                    );
-                  });
+
+                  if (auth == false) {
+                    // Check priv_key
+                    bool isMember = await checkKey(key: text);
+                    if (isMember == true) {
+                      priv_key = text;
+                      auth = true;
+                     setState(() {
+                      messages.add(
+                        const Message(
+                          text: "Access Approved! \n\n Welcome!",
+                          isSentByMe: false,
+                        ),
+                      );
+                    });
+                    } else {
+                    setState(() {
+                      messages.add(
+                        const Message(
+                          text: "Access denied",
+                          isSentByMe: false,
+                        ),
+                      );
+                    });
+                    }
+                  } else {
+                     
+                    chatHistories.add(("user", text));
+                    String response = await openaiReadResponse(chatLog: chatHistories, key: priv_key);
+                    chatHistories.add(("assistant", response));
+                    setState(() {
+                      messages.add(
+                        Message(
+                          text: text, 
+                          isSentByMe: true,
+                        ),
+                      );
+                      messages.add(
+                        Message(
+                          text: response,
+                          isSentByMe: false,
+                        ),
+                      );
+                    });
+                  }
                 },
               ),
             ),

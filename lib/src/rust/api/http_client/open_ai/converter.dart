@@ -15,18 +15,20 @@ abstract class ChatResultsString implements RustOpaqueInterface {}
 /// Conversations History
 class ChatLog {
   final List<ChatCompletionRequestMessage> contents;
+  final String pubKey;
 
   const ChatLog({
     required this.contents,
+    required this.pubKey,
   });
 
   /// Converting the Chat Histories from fromtend into a list of tuplets wuth role definition and text.
   /// The result can be used directly in the Chat-service.
   static Future<ChatLog> msgConvertion(
-          {required List<(String, String)> chatLog}) =>
+          {required List<(String, String)> chatLog, required String key}) =>
       RustLib.instance.api
           .crateApiHttpClientOpenAiConverterChatLogMsgConvertion(
-              chatLog: chatLog);
+              chatLog: chatLog, key: key);
 
   /// Serialize Data into JSON-format
   Future<ChatResultsString> serialize() =>
@@ -35,12 +37,13 @@ class ChatLog {
       );
 
   @override
-  int get hashCode => contents.hashCode;
+  int get hashCode => contents.hashCode ^ pubKey.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ChatLog &&
           runtimeType == other.runtimeType &&
-          contents == other.contents;
+          contents == other.contents &&
+          pubKey == other.pubKey;
 }
