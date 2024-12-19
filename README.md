@@ -17,9 +17,11 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - **BlockChain authentication** 
   
 ### In Progress:
-- **Omni-Search** Stage 1 X-API
+- **Omni-Search** Stage 1
 - **Trading Bot**
+- **ARP-Scanner** <testing>
   
+
 ---
 ### Roadmap
 - [x] **Web Integration**
@@ -48,4 +50,3 @@ Thank you :)
 
 ### Future Goals
 - Local Server for deeper seach [ By pass cockies, Auth, etc. ] via SSH-KEY, DataBase and HTTP.
-- 
