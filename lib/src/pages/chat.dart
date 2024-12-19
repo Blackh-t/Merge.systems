@@ -1,4 +1,7 @@
 
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_highlighting/flutter_highlighting.dart';
+import 'package:flutter_highlighting/themes/github-dark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -100,10 +103,6 @@ class _Chat extends State<Chat> {
                               ),
                               borderRadius: BorderRadius.circular(10)
                             ),
-                          code: const TextStyle (
-                              fontSize: 12,
-                              color: Colors.blueAccent,
-                          ),
                           h1: TextStyle(color: HexColor('#EEEEEE')), 
                           h2: TextStyle(color: HexColor('#EEEEEE')), 
                           h3: TextStyle(color: HexColor('#EEEEEE')), 
@@ -113,6 +112,7 @@ class _Chat extends State<Chat> {
                           'latex' : LatexElementBuilder(
                             textStyle: const TextStyle(color: Colors.blueAccent),
                           ),
+                          'code' : CodeElementBuilder(),
                         },
                         extensionSet: md.ExtensionSet(
                         [
@@ -236,3 +236,43 @@ AppBar appBar() {
     ),
   );
 }
+
+class CodeElementBuilder extends MarkdownElementBuilder {
+  @override
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    var language = '';
+
+    if (element.attributes['class'] != null) {
+      String lg = element.attributes['class'] as String;
+      language = lg.substring(9);
+    }
+
+    // Check if element.textContent is null and handle it
+    if (element.textContent == null) {
+      // Return an empty widget or placeholder if textContent is null
+      return SizedBox();  // Or some other widget indicating there's no code to display
+    }
+
+    return SizedBox(
+      child: Column(
+      children: [ HighlightView(
+        // Safely use element.textContent, since we've checked for null
+        element.textContent,
+
+        // Specify language, make sure it's non-null
+        languageId: language.isNotEmpty ? language : 'plaintext',  // Default to 'plaintext' if empty
+
+        // Specify highlight theme
+        theme: githubDarkTheme,  // Or any other theme you want
+
+        // Specify padding
+        padding: const EdgeInsets.all(8),
+        
+        // Specify text style
+        textStyle: GoogleFonts.robotoMono().copyWith(fontSize: 12),
+      ),
+    ])
+    );
+  }
+}
+

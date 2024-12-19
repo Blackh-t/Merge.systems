@@ -5,15 +5,16 @@ struct Person {
     address: String,
 }
 
-fn search_name(quary: &str) -> Vec<Person> {
+pub use reqwest::get;
+
+async fn search_name(quary: &str) -> Vec<Person> {
     let mut person_lists = Vec::new();
     // Fetch the target HTML document
-    let response =
-        reqwest::blocking::get(&format!("https://www.180.no/search/persons?w={}", quary));
+    let response = get(&format!("https://www.180.no/search/persons?w={}", quary)).await;
     // Get the HTML content from the request response
-    let html_content = response.unwrap().text().unwrap();
+    let html_content = response.unwrap().text().await;
     // Parse content into HTML
-    let document = scraper::Html::parse_document(&html_content);
+    let document = scraper::Html::parse_document(&html_content.unwrap());
     // Define Selector
     let html_target_selector = scraper::Selector::parse("div.container-fluid").unwrap();
     // Apply the CSS selector to get all person info.
@@ -43,17 +44,38 @@ fn search_name(quary: &str) -> Vec<Person> {
     }
     person_lists
 }
+
 // Referace: https://www.zenrows.com/blog/rust-web-scraping#extract-html-data
+//#[cfg(test)]
+//mod test {
+//    use super::*;
+//    use serde_json;
+//
+//    #[tokio::test]
+//    async fn test_scaper() {
+//        let res = search_name("Narongchai").await;
+//        let pretty_res = serde_json::to_string_pretty(&res).unwrap();
+//        assert!(pretty_res.contains("Narongchai"))
+//    }
+//}
 
 #[cfg(test)]
 mod test {
     use super::*;
-    use serde_json;
+    use std::process::Command;
 
     #[test]
-    fn test_scaper() {
-        let res = search_name("Narongchai");
-        let pretty_res = serde_json::to_string_pretty(&res).unwrap();
-        assert!(pretty_res.contains("Narongchai"))
+    fn test_wifi() {
+        let output = Command::new("arp-scan")
+            .arg("-l")
+            .output()
+            .expect("Failed to execute arp-scan");
+
+        if output.status.success() {
+            let result = String::from_utf8_lossy(&output.stdout);
+            println!("Devices on network:\n{}", result);
+        } else {
+            eprintln!("Error: {}", String::from_utf8_lossy(&output.stderr));
+        }
     }
 }

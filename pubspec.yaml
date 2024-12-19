@@ -41,7 +41,9 @@ dependencies:
   grouped_list: ^4.2.0
   flutter_markdown: ^0.7.4+3
   hexcolor: ^3.0.1
+  flutter_highlighting: ^0.9.0+11.8.0
   flutter_markdown_latex: ^0.3.4
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
