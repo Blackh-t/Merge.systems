@@ -17,7 +17,7 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - **BlockChain authentication** 
   
 ### In Progress:
-- **Omni-Search** Stage 1
+- **Omni-Search** Stage 1 X-API
 - **Trading Bot**
   
 ---
