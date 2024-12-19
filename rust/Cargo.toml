@@ -9,14 +9,11 @@ crate-type = ["cdylib", "staticlib"]
 [dependencies]
 flutter_rust_bridge = "=2.6.0"
 async-openai-wasm = "0.26.0"
-reqwasm = "=0.5.0"
-scraper = "0.21.0"
-lazy_static = "1.5.0"
-dotenv = "0.15.0"
-reqwest = "0.12.9"
+reqwest = { version = "0.12.9", features = ["blocking"] }
 serde = { version = "1.0.215", features = ["derive"] }
 sendgrid = "0.23.0"
 thiserror = "2.0.5"
 serde_json = "1.0.133"
 ethers = { version = "2.0", features = ["rustls"] }
 eyre = "0.6"
+scraper = "0.22.0"

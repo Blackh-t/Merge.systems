@@ -11,10 +11,8 @@ async fn openai_send_request(
     key: String,
 ) -> Result<String, Box<dyn Error>> {
     // Convert ChatLog into Structure of conversations
-    let msg = ChatLog::msg_convertion(chat_log, key)
-        .await
-        .serialize()
-        .unwrap();
+    let msg = ChatLog::msg_convertion(chat_log, key).await.serialize()?;
+
     // Build request
     let url = "https://0xe99caff28bb4a837abd9e0fae807cb2f.netlify.app/.netlify/functions/open_ai";
     let client = reqwest::Client::new();
