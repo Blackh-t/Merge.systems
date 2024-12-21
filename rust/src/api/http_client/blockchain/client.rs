@@ -14,8 +14,7 @@ pub async fn check_key(key: String) -> bool {
     }
 
     // Defined EndPoint for verification.
-    let url =
-        "https://0xe99caff28bb4a837abd9e0fae807cb2f.netlify.app/.netlify/functions/blockchain";
+    let url = "https://www.merge.systems/.netlify/functions/blockchain";
     let client = reqwest::Client::new();
 
     // Send the wallet key to the verification.

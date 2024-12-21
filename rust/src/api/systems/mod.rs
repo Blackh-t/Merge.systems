@@ -1,2 +1,3 @@
 pub mod blockchain;
-pub mod scaper;
+mod market_analyser;
+mod scaper;

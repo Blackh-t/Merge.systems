@@ -58,24 +58,3 @@ async fn search_name(quary: &str) -> Vec<Person> {
 //        assert!(pretty_res.contains("Narongchai"))
 //    }
 //}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    use std::process::Command;
-
-    #[test]
-    fn test_wifi() {
-        let output = Command::new("arp-scan")
-            .arg("-l")
-            .output()
-            .expect("Failed to execute arp-scan");
-
-        if output.status.success() {
-            let result = String::from_utf8_lossy(&output.stdout);
-            println!("Devices on network:\n{}", result);
-        } else {
-            eprintln!("Error: {}", String::from_utf8_lossy(&output.stderr));
-        }
-    }
-}

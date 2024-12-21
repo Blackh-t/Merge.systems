@@ -14,7 +14,7 @@ async fn openai_send_request(
     let msg = ChatLog::msg_convertion(chat_log, key).await.serialize()?;
 
     // Build request
-    let url = "https://0xe99caff28bb4a837abd9e0fae807cb2f.netlify.app/.netlify/functions/open_ai";
+    let url = "https://www.merge.systems/.netlify/functions/open_ai";
     let client = reqwest::Client::new();
     let response = client
         .post(url)
