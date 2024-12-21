@@ -20,9 +20,9 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 ### In Progress:
 - **Omni-Search** Stage 1
 - **Trading Bot**
-- **ARP-Scanner** <testing>
+- **ARP-Scanner** [testing]
+- **Economic Market Analyzer**
   
-
 ---
 ### Roadmap
 - [x] **Web Integration**
@@ -35,7 +35,6 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - [ ] **Customizable Task Automation**
 - [ ] **Image Processing**
 - [ ] **Smart Notifications**
-
 
 ---
 ### Upcoming Features
