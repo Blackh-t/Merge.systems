@@ -1,4 +1,4 @@
-# Merge Systems
+# Dimension Zero 
 
 https://www.merge.systems/
 
