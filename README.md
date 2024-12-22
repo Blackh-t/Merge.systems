@@ -15,19 +15,19 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 
 ### Current Features:
 
-- **AI Memory** : Conversation Historical
-- **Web Integration** : Security
-- **Northern Light** : Live data forcast
-- **Mail API** : Send Mail
+- **AI Memory**                 : Conversation Historical
+- **Web Integration**           : Security
+- **Northern Light**            : Live data forcast
+- **Mail API**                  : Send Mail
 - **BlockChain authentication** : Verification
-- **Market Analyzer** : RSI - 1Dimensions
+- **Market Analyzer**           : RSI 1-Dimension
 
 ### In Progress:
 
-- **Omni-Search** | Stage 1
+- **Omni-Search**     | Stage 1  : Identity
 - **Trading Bot**
-- **ARP-Scanner** | testing
-- **Market Analyzer** | Stage 2 - 2Dimensions Code will not be public.
+- **ARP-Scanner**     | testing  : Admin Only
+- **Market Analyzer** | Stage 2  : 2-Dimension Code will not be public.
 
 ---
 
