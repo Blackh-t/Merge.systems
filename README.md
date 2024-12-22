@@ -20,14 +20,14 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - **Northern Light** : Live data forcast
 - **Mail API** : Send Mail
 - **BlockChain authentication** : Verification
-- **Market Analyzer** : RSI
+- **Market Analyzer** : RSI - 1Dimensions
 
 ### In Progress:
 
 - **Omni-Search** | Stage 1
 - **Trading Bot**
 - **ARP-Scanner** | testing
-- **Market Analyzer** | Stage 2
+- **Market Analyzer** | Stage 2 - 2Dimensions Code will not be public.
 
 ---
 
