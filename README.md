@@ -28,6 +28,7 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - **Trading Bot**
 - **ARP-Scanner**     | testing  : Admin Only
 - **Market Analyzer** | Stage 2  : 2-Dimension Code will not be public.
+- **DashBoard** :     | Stage 1  : Trading
 
 ---
 
