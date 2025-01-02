@@ -10,11 +10,11 @@ use std::time::SystemTime;
 /// - timestamp : Must be consistent with the 'KC-API-TIMESTAMP' field in the request header.
 /// - method    : HTTP-method in UPPER-CASE (POST, GET...).
 /// - endpoint  : API-link.
-/// - body      : The request body is a JSON string and need to be the same with the parameters passed by the API.
+/// - payload      : The request body is a JSON string and need to be the same with the parameters passed by the API.
 ///
 /// # Returns
 /// - Encoded prehash as base64
-fn encrypt_prehash(
+pub fn encrypt_prehash(
     api_secret: String,
     timestamp: String,
     method: String,
@@ -42,7 +42,7 @@ fn encrypt_prehash(
 ///
 /// # Returns
 /// - Encrypted passcode as base64.
-fn encrypt_pass(api_secret: String, passphrase: String) -> String {
+pub fn encrypt_pass(api_secret: String, passphrase: String) -> String {
     // Initialize HMAC-sha256 with secret api key.
     let mut mac = Hmac::<Sha256>::new_from_slice(api_secret.as_bytes())
         .expect("Use API-Secret to encrypt the prehash");
@@ -67,7 +67,7 @@ mod test {
             .duration_since(UNIX_EPOCH)
             .expect("Clock may have gone backwards")
             .as_millis();
-        let body = r#"{"clientOid": "235b7471-0190-4e10-a4cf-953c83a06af5", "side": "sell", "symbol": "ETH-USDT", "type": "market", "isIsolated": false, "funds": "1"}"#.to_string();
+        let payload = r#"{"clientOid": "235b7471-0190-4e10-a4cf-953c83a06af5", "side": "sell", "symbol": "ETH-USDT", "type": "market", "isIsolated": false, "funds": "1"}"#.to_string();
 
         // Generate encode 64 sign msg
         let en64_sign = encrypt_prehash(
@@ -75,7 +75,7 @@ mod test {
             timestamp.to_string(),
             "POST".to_string(),
             "/api/v3/hf/margin/order".to_string(),
-            body,
+            payload,
         );
 
         println!("{}", en64_sign);
