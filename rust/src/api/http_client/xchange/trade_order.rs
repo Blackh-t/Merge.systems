@@ -124,7 +124,7 @@ impl TradeOrder {
     /// # Returns
     /// - Returning a completed configurated payload that can be used in HTTP-request after
     /// serialized.
-    pub async fn open_long<T: Into<f64> + Copy, S: Into<String> + Copy>(
+    pub async fn create_long_position_payload<T: Into<f64> + Copy, S: Into<String> + Copy>(
         symbol: S,
         amount: T,
         sl_percent: T,
@@ -166,7 +166,7 @@ impl TradeOrder {
     /// # Returns
     /// - Returning a completed configurated payload that can be used in HTTP-request after
     /// serialized.
-    pub async fn open_short<T: Into<f64> + Copy, S: Into<String> + Copy>(
+    pub async fn create_short_position_payload<T: Into<f64> + Copy, S: Into<String> + Copy>(
         symbol: S,
         amount: T,
         sl_percent: T,
@@ -196,7 +196,10 @@ impl TradeOrder {
     }
 
     /// Closing all open positions base on the given trade symbol.
-    pub fn close_orders<T: Into<f64>, S: Into<String>>(symbol: S, amount: T) -> Self {
+    pub fn create_close_position_payload<T: Into<f64>, S: Into<String>>(
+        symbol: S,
+        amount: T,
+    ) -> Self {
         TradeOrder::new()
             .short()
             .close()
@@ -217,8 +220,8 @@ mod test {
     use super::*;
 
     #[tokio::test]
-    async fn test_long_position_payload_generate() {
-        let payload = TradeOrder::open_long("BTC", 100, 5, 5, "50")
+    async fn test_long_position_payload_generator() {
+        let payload = TradeOrder::create_long_position_payload("BTC", 100, 5, 5, "50")
             .await
             .serialize();
         println!("{}", payload.unwrap());
