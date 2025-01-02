@@ -69,4 +69,13 @@ impl MarketData {
             Err(_) => Vec::new(),
         }
     }
+
+    pub async fn get_market_price(symbol: &str) -> f64 {
+        let mut prices = MarketData::fetch_market_data("ZEN", "1m", 3).await;
+        let price = match prices.pop().unwrap() {
+            DataPoint::Crypto { price, .. } => price,
+            _ => 0.0,
+        };
+        price
+    }
 }
