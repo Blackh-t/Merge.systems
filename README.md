@@ -20,14 +20,15 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 - **Northern Light**            : Live data forcast
 - **Mail API**                  : Send Mail
 - **BlockChain authentication** : Verification
-- **Market Analyzer**           : RSI 1-Dimension
+- **Market Analyzer**           : RSI
+- **Trading Bot**               : Open/Close Positions
 
 ### In Progress:
 
 - **Omni-Search**     | Stage 1  : Identity
-- **Trading Bot**
+- **Trading Bot**     | Stage 2  : Use Machine Learning.
 - **ARP-Scanner**     | testing  : Admin Only
-- **Market Analyzer** | Stage 2  : 2-Dimension Code will not be public.
+- **Market Analyzer** | Stage 2  : Combine with News.
 - **DashBoard** :     | Stage 1  : Trading
 
 ---
@@ -51,7 +52,3 @@ Merge Systems is here to integrate AI into our everyday tasks, offering the feat
 
 - **DashBoard**
 - **Face Recognition**
-
-### Future Goals
-
-- Local Server for deeper seach [ By pass cockies, Auth, etc. ] via SSH-KEY, DataBase and HTTP.
