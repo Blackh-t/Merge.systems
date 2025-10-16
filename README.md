@@ -2,6 +2,8 @@
 
 https://www.merge.systems/
 
+Guest key_wallet: `9d39b9b0e97727ebd57a0eb03c3d6aed9f4539a2ddc73b9149e19c52e0c93f78`
+
 ## Introduction
 
 Merge Systems is here to integrate AI into our everyday tasks, offering the features you’ve always wanted from @OpenAI, including:
